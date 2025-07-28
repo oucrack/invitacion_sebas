@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Luna ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+            perspective: 1000px;
+        }
+
+        .estrellas {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3),
+                        inset 0 0 20px rgba(255, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            animation: flotar 6s ease-in-out infinite;
+            z-index: 1;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #ff69b4 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Estilo para scrollbar en Chrome */
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: #ff69b4;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+            25% { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
+            50% { transform: translateY(0) rotateX(-2deg) rotateY(-2deg); }
+            75% { transform: translateY(10px) rotateX(2deg) rotateY(2deg); }
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #ff69b4,
+                         0 0 20px #ff69b4,
+                         0 0 30px #ff69b4;
+            animation: brillar 2s infinite;
+        }
+
+        @keyframes brillar {
+            0%, 100% { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4; }
+            50% { text-shadow: 0 0 20px #ff69b4, 0 0 30px #ff69b4, 0 0 40px #ff69b4, 0 0 50px #ff69b4; }
+        }
+
+        .mensaje {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            opacity: 0;
+            animation: aparecer-texto 1s forwards;
+            animation-delay: 1s;
+            text-shadow: 0 0 5px #fff;
+            padding: 0 10px;
+        }
+
+        .corazon {
+            font-size: 5rem;
+            color: #ff69b4;
+            animation: latir-3d 1.5s infinite;
+            display: inline-block;
+            margin: 1rem;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes latir-3d {
+            0%, 100% { transform: scale(1) rotateY(0deg); }
+            25% { transform: scale(1.2) rotateY(45deg); }
+            50% { transform: scale(1) rotateY(0deg); }
+            75% { transform: scale(1.2) rotateY(-45deg); }
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: aparecer-texto 1s forwards;
+            animation-delay: 2s;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-si {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            box-shadow: 0 0 15px rgba(255,105,180,0.5);
+        }
+
+        .btn-no {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255,105,180,0.8);
+        }
+
+        .flores {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 2;
+            filter: drop-shadow(0 0 10px rgba(255,105,180,0.8));
+        }
+
+        #confeti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .poema {
+            font-style: italic;
+            line-height: 1.8;
+            color: #fff;
+            text-shadow: 0 0 5px #ff69b4;
+        }
+
+        .imagen-amor {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.5s ease;
+            margin: 20px auto;
+            display: none;
+            border: 3px solid #ff69b4;
+        }
+
+        .imagen-amor.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            display: block;
+        }
+
+        @keyframes aparecer-texto {
+            to { opacity: 1; }
+        }
+
+        .menu-citas {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            padding: 10px 0;
+        }
+
+        .menu-citas.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .opcion-cita {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 300px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opcion-cita:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 105, 180, 0.2);
+            border-color: rgba(255, 105, 180, 0.8);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .opcion-cita::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .opcion-cita:hover::before {
+            left: 100%;
+        }
+
+        .opcion-cita i {
+            font-size: 1.5em;
+            margin-right: 10px;
+            color: #ff69b4;
+        }
+
+        .opcion-cita h3 {
+            margin: 0 0 10px 0;
+            color: #ff69b4;
+        }
+
+        .opcion-cita p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="estrellas"></div>
+    <div class="container">
+        <h1>Mi Luna ❤️</h1>
+        <div class="mensaje">
+            ¿Te gustaría salir conmigo hoy?
+        </div>
+        <div class="corazon">❤️</div>
+        <div class="menu-citas">
+            <div class="opcion-cita" onclick="seleccionarCita(1)">
+                <h3>🫓 Arepas de Queso</h3>
+                <p>Compartamos unas deliciosas arepas de queso recién hechas mientras conversamos y nos miramos a los ojos.</p>
+            </div>
+            <div class="opcion-cita" onclick="seleccionarCita(2)">
+                <h3>🍦 Cucurucho Dulce</h3>
+                <p>Disfrutemos de un helado mientras paseamos tomados de la mano bajo el atardecer.</p>
+            </div>
+            <div class="opcion-cita" onclick="seleccionarCita(3)">
+                <h3>🍿 Películas y Crispetas</h3>
+                <p>Una tarde perfecta viendo películas juntos, con crispetas y muchos abrazos.</p>
+            </div>
+        </div>
+        <div class="botones">
+            <button class="btn btn-si" onclick="aceptar()">¡Sí!</button>
+            <button class="btn btn-no" onmouseover="esquivar(this)" onclick="aceptar()">No</button>
+        </div>
+    </div>
+    <canvas id="confeti"></canvas>
+
+    <script>
+        // Crear estrellas en el fondo
+        function crearEstrellas() {
+            const estrellas = document.querySelector('.estrellas');
+            for(let i = 0; i < 200; i++) {
+                const estrella = document.createElement('div');
+                estrella.style.position = 'absolute';
+                estrella.style.width = '2px';
+                estrella.style.height = '2px';
+                estrella.style.background = '#fff';
+                estrella.style.left = Math.random() * 100 + 'vw';
+                estrella.style.top = Math.random() * 100 + 'vh';
+                estrella.style.animation = `parpadear ${Math.random() * 2 + 1}s infinite`;
+                estrellas.appendChild(estrella);
+            }
+        }
+
+        // Añadir animación de parpadeo para las estrellas
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes parpadear {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.2; }
+            }
+            @keyframes caer {
+                from {
+                    transform: translateY(-20vh) rotate(0deg) scale(0.8);
+                }
+                to {
+                    transform: translateY(120vh) rotate(720deg) scale(1.2);
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        function esquivar(btn) {
+            const container = document.querySelector('.container');
+            const rect = container.getBoundingClientRect();
+            const btnRect = btn.getBoundingClientRect();
+            
+            const randomX = Math.random() * (window.innerWidth - btnRect.width);
+            const randomY = Math.random() * (window.innerHeight - btnRect.height);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.transition = 'all 0.3s ease-out';
+        }
+
+        function aceptar() {
+            document.querySelector('.mensaje').innerHTML = '¡Gracias por aceptar! ❤️<br><br>' +
+                '<div class="poema">' +
+                'Eres la luna que ilumina mi noche,<br>' +
+                'el suspiro que alegra mi alma,<br>' +
+                'la estrella que guía mi camino,<br>' +
+                'y el amor que llena mi corazón.</div><br>' +
+                '<div style="color: #ff69b4; margin-top: 20px;">Elige una opción para nuestra cita ❤️</div>';
+            document.querySelector('.botones').style.display = 'none';
+            
+            const menuCitas = document.querySelector('.menu-citas');
+            menuCitas.style.display = 'block';
+            setTimeout(() => {
+                menuCitas.classList.add('visible');
+            }, 100);
+            
+            iniciarConfeti();
+            crearFlores();
+        }
+
+        function seleccionarCita(opcion) {
+            let mensaje = '';
+            switch(opcion) {
+                case 1:
+                    mensaje = '¡Perfecto! 🫓 Vamos por unas deliciosas arepas de queso. ¡Te encantarán!';
+                    break;
+                case 2:
+                    mensaje = '¡Genial! 🍦 Un cucurucho dulce para la persona más dulce.';
+                    break;
+                case 3:
+                    mensaje = '¡Excelente elección! 🍿 Películas, crispetas y tu compañía... ¡la combinación perfecta!';
+                    break;
+            }
+            document.querySelector('.menu-citas').style.display = 'none';
+            document.querySelector('.mensaje').innerHTML = `
+                <div style="font-size: 1.2em; color: #ff69b4;">
+                    ${mensaje}<br><br>
+                    <span style="font-size: 0.9em; color: white;">
+                        Será una cita inolvidable ❤️
+                    </span>
+                </div>
+            `;
+            crearFlores();
+        }
+
+        function crearFlores() {
+            const flores = ['🌹', '🌸', '🌺', '🌷', '💐'];
+            for(let i = 0; i < 20; i++) {
+                const flor = document.createElement('div');
+                flor.className = 'flores';
+                flor.innerHTML = flores[Math.floor(Math.random() * flores.length)];
+                flor.style.left = Math.random() * 100 + 'vw';
+                flor.style.top = Math.random() * 100 + 'vh';
+                flor.style.animation = `caer ${Math.random() * 3 + 2}s linear infinite`;
+                document.body.appendChild(flor);
+            }
+        }
+
+        function iniciarConfeti() {
+            const canvas = document.getElementById('confeti');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particulas = [];
+            const colores = ['#ff69b4', '#ff1493', '#ffffff', '#ffd700'];
+
+            class Particula {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height - canvas.height;
+                    this.velocidadX = Math.random() * 6 - 3;
+                    this.velocidadY = Math.random() * 3 + 2;
+                    this.color = colores[Math.floor(Math.random() * colores.length)];
+                    this.tamaño = Math.random() * 10 + 5;
+                    this.angulo = Math.random() * 360;
+                    this.velocidadRotacion = Math.random() * 6 - 3;
+                    this.brillo = Math.random() * 0.5 + 0.5;
+                }
+
+                actualizar() {
+                    this.x += this.velocidadX;
+                    this.y += this.velocidadY;
+                    this.angulo += this.velocidadRotacion;
+                    if (this.y > canvas.height) {
+                        this.y = -10;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+
+                dibujar() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angulo * Math.PI / 180);
+                    ctx.globalAlpha = this.brillo;
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    for(let i = 0; i < 5; i++) {
+                        ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * this.tamaño,
+                                 Math.sin((18 + i * 72) * Math.PI / 180) * this.tamaño);
+                        ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (this.tamaño/2),
+                                 Math.sin((54 + i * 72) * Math.PI / 180) * (this.tamaño/2));
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            for (let i = 0; i < 100; i++) {
+                particulas.push(new Particula());
+            }
+
+            function animar() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particulas.forEach(p => {
+                    p.actualizar();
+                    p.dibujar();
+                });
+                requestAnimationFrame(animar);
+            }
+
+            animar();
+        }
+
+        // Iniciar las estrellas al cargar la página
+        window.onload = crearEstrellas;
+    </script>
+</body>
+</html>
